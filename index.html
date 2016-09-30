@@ -14,8 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>My App</title>
-    <meta name="description" content="My App description">
+    <title>Ahora Sí Paso</title>
+    <meta name="description" content="Ahora Sí Paso">
 
     <link rel="icon" href="/images/favicon.ico">
 
@@ -27,12 +27,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="My App">
+    <meta name="application-name" content="ASP">
 
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="My App">
+    <meta name="apple-mobile-web-app-title" content="ASP">
 
     <!-- Homescreen icons -->
     <link rel="apple-touch-icon" href="/images/manifest/icon-48x48.png">
@@ -91,10 +91,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       }
     </script>
-
-    <link rel="import" href="/src/asp-app.html">
-    <link rel="import" href="bower_components/polymerfire/firebase-app.html">
-
+     <link rel="import" href="src/asp-app/asp-app.html">
+      <link rel="import" href="bower_components/polymerfire/polymerfire.html">
     <style>
       body {
         margin: 0;
@@ -107,12 +105,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </head>
   <body>
     <firebase-app
-      name=""
-      api-key=""
-      auth-domain=""
-      database-url="">
+         name="asp_project01"
+         api-key="AIzaSyCitRA4OEcLnAlS2AGByLIdLIS2qk0oI7s"
+         auth-domain="app-adoptalo.firebaseapp.com"
+         database-url="https://app-adoptalo.firebaseio.com/">
     </firebase-app>
-    <asp-app></asp-app>
-    <!-- Built with love using Polymer Starter Kit -->
+   <asp-app></asp-app>
   </body>
 </html>

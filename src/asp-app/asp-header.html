@@ -1,0 +1,110 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/app-storage/app-network-status-behavior.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+
+<dom-module id="asp-header">
+  <template>
+	    <style is="custom-style">
+
+		    paper-toolbar {
+		    /*  background: var(--paper-light-blue-700);*/
+		    }
+
+		    paper-toolbar .title {
+		      margin: 0 8px;
+		    }
+
+		    iron-image {
+		        width: 40px;
+		        height: 40px;
+		        border-radius: 20px;
+		      }
+
+		    .spacer {
+	        	@apply(--layout-flex);
+	      	}
+
+	      	.displayname{
+	      	 	font-family: 'Roboto', 'Noto', sans-serif;
+      			font-size: 14px;
+	      		padding-left: 2px;
+	      	 }
+
+	      	 .title {
+		        flex-grow: 1;
+		        margin: 12px 0;
+		     }
+
+		     paper-button {
+			      display: block;
+			      background: #4285f4;
+			      color: #fff;
+			  }
+
+			  paper-menu {
+			      display: block;
+			      text-align: left;
+			   }
+
+			   .item {
+			      max-width: 300px;
+			      text-align: left;
+			    }
+
+
+	 	 </style>
+
+	   <paper-toolbar>
+	      <paper-icon-button icon="account-balance" on-tap="changedRoute" link="home"></paper-icon-button>
+	      <span class="spacer title">ASP</span>
+	       <iron-image src$="[[user.photoURL]]" sizing="cover"></iron-image>
+	       <span class="displayname">[[user.displayName]]</span>
+
+	       <paper-menu-button  horizontal-align="right">
+            <paper-icon-button   icon="icons:apps" class="dropdown-trigger" alt="menu"></paper-icon-button>
+            <paper-menu class="dropdown-content">
+            	  <paper-item>Mis Cursos</paper-item>
+                  <paper-item on-tap="changedRoute" link="profile">Perfil</paper-item>
+                  <paper-item>Preferencias</paper-item>
+                  <paper-item>Pagos</paper-item>
+                  <paper-item on-tap="lock">Cerrar Sesión</paper-item>
+            </paper-menu>
+          </paper-menu-button>
+	    </paper-toolbar>
+
+   </template>
+
+	  <script>
+	    Polymer({
+	      is: 'asp-header',
+        behaviors: [
+            Polymer.AppNetworkStatusBehavior
+        ],
+        properties: {
+
+        },
+	      lock() {
+          console.log("lock():: boton cerrar sesion");
+	      	this.fire('sign-out');
+		    },
+        changedRoute(e){
+            console.log("ejecutando link");
+            var link=e.currentTarget.getAttribute('link');
+            this.fire('changedroute-out', {'link':link});
+
+        }
+
+	    });
+	  </script>
+</dom-module>

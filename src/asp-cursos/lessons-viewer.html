@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="vimeo-lite.html">
+
+<dom-module id="lessons-viewer">
+  <template>
+    <style>
+    .lesson-content {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      @apply(--layout-wrap);
+    }
+    vimeo-lite {
+      width: 640px;
+    }
+    </style>
+    <firebase-query
+        id="query"
+        app-name="notes"
+        path="/lessons/{{course}}"
+        data="{{data}}">
+    </firebase-query>
+    <paper-tabs selected="{{selected}}" scrollable>
+      <template is="dom-repeat" items="{{data}}" as="lesson">
+        <paper-tab>[[lesson.title]]</paper-tab>
+      </template>
+    </paper-tabs>
+    <iron-pages selected="{{selected}}">
+      <template is="dom-repeat" items="{{data}}" as="lesson">
+        <div class="lesson-content">
+          <vimeo-lite vimeo-id="[[lesson.vimeoId]]"></vimeo-lite>
+          <p>[[lesson.text]]</p>
+        </div>
+      </template>
+    </iron-pages>
+  </template>
+  <script>
+    Polymer ({
+      is : 'lessons-viewer',
+      properties : {
+        course : {
+          type : String
+        }
+      }
+    });
+  </script>
+</dom-moduel>

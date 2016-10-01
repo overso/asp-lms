@@ -64,21 +64,20 @@
 
 
 	 	 </style>
-    <login-state logged="{{_logged}}" user="{{_user}}"></login-state>
-	   <paper-toolbar>
+  	   <paper-toolbar>
 	      <paper-icon-button icon="account-balance"></paper-icon-button>
 	      <span class="spacer title">Ahora Sí Paso </span>
-	       <iron-image src$="{{_user.photoURL}}" sizing="cover"></iron-image>
-	       <span class="displayname">{{_user.displayName}}</span>
+	       <iron-image src$="{{user.photoURL}}" sizing="cover"></iron-image>
+	       <span class="displayname">{{user.displayName}}</span>
 
 	       <paper-menu-button  horizontal-align="right">
             <paper-icon-button icon="icons:apps" class="dropdown-trigger" alt="menu"></paper-icon-button>
             <paper-menu class="dropdown-content">
             	  <paper-item>Mis Cursos</paper-item>
-                  <paper-item>Perfil</paper-item>
+                  <paper-item on-tap="clickLink" link="profile">Perfil</paper-item>
                   <paper-item>Preferencias</paper-item>
                   <paper-item>Pagos</paper-item>
-                  <paper-item on-tap="lock">Cerrar Sesión</paper-item>
+                  <paper-item on-tap="signOut">Cerrar Sesión</paper-item>
             </paper-menu>
           </paper-menu-button>
 	    </paper-toolbar>
@@ -89,16 +88,14 @@
 	    Polymer({
 	      is: 'asp-header',
 	      properties : {
-          _logged: {
-            type: Boolean
-          },
-          _user: {
-            type: Object
-          },
+      
 	      },
-	      lock() {
-	      	this.fire('lock-in', null);
-		  }
+	      signOut() {
+	      	  this.fire('sign-out', null);
+		    },
+        clickLink(e){
+            this.fire('changedroute-out', {link:e.currentTarget.getAttribute('link')});
+        }
 
 	    });
 	  </script>

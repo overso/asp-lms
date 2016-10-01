@@ -1,0 +1,27 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+
+<dom-module id="asp-course-search">
+  <template>
+    <style>
+
+    </style>
+    <firebase-query
+        id="query"
+        app-name="asp_project01"
+        path="/course_name"
+        data="{{courses}}">
+    </firebase-query>
+  </template>
+  <script>
+    Polymer ({
+      is : 'asp-course-search',
+      properties: {
+        courses: {
+          type: Object,
+          notify: true
+        }
+      }
+    });
+  </script>
+</dom-moduel>

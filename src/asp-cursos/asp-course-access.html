@@ -1,0 +1,79 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="lessons-viewer.html">
+<link rel="import" href="asp-course-suscribe.html">
+<link rel="import" href="asp-course-payment.html">
+
+<dom-module id="asp-course-access">
+  <template>
+    <style>
+
+    </style>
+    <app-route route="{{route}}" pattern="/:courseName" data="{{routeData}}"></app-route>
+    <firebase-query
+        id="query"
+        app-name="notes"
+        path="/members/{{routeData.courseName}}/{{user.uid}}"
+        data="{{data}}">
+    </firebase-query>
+    <iron-pages attr-for-selected="name" selected="[[_cp(data)]]">
+      <div name="suscribe"><course-suscribe user="{{user}}" course-name="{{routeData.courseName}}"></course-suscribe></div>
+      <div name="view"><lessons-viewer course="{{routeData.courseName}}"></lessons-viewer></div>
+      <div name="pay"><course-payment></course-payment></div>
+    </iron-selector>
+  </template>
+  <script>
+    Polymer ({
+      is : 'aspcourse-access',
+      properties : {
+        user : {
+          type : Object,
+          notify: true
+        },
+        route : {
+          type: Object,
+          notify : true
+        },
+        selected : {
+          type: String,
+          value : 'suscribe'
+        }
+      },
+      observers: [
+        '_itemsChanged(data.splices)',
+        '_vigenciaChanged(data.*, 0)'
+      ],
+      _computedValidity : function (vigencia) {
+        var now = new Date().getTime();
+        if(!vigencia) {
+          this.selected = 'suscribe';
+        } else if (vigencia >= now) {
+          this.selected = 'view';
+        } else if(vigencia <= now) {
+          this.selected = 'pay';
+        }
+      },
+      _itemsChanged: function (changeRecord) {
+        if (changeRecord) {
+          changeRecord.indexSplices.forEach(function(s) {
+            for (var i=0; i<s.addedCount; i++) {
+              var index = s.index + i;
+              var n = s.object[index];
+              this._computedValidity(n.vigencia);
+            }
+          }, this);
+        }
+      },
+      _vigenciaChanged : function (cR, index) {
+        if (cR.base[0] && cR.path == 'data.splices') {
+          //console.log(cR.base[0]);
+        }
+      },
+      _cp : function (data) {
+        console.log("dataR:" + data);
+      }
+    });
+  </script>
+</dom-moduel>

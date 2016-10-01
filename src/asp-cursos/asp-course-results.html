@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="asp-course-results">
+  <template>
+    <style>
+      :host {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        @apply(--layout-wrap);
+      }
+
+      paper-card {
+        width: 300px;
+        margin: 1em 0.5em 0em;
+      }
+      .card-content {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+      }
+    </style>
+    <template is="dom-repeat" items="{{courses}}" as="course">
+      <a href$="./course/[[course.$key]]" tabindex="-1">
+        <paper-card heading$="[[course.title]]" image$="[[course.image]]" alt$="[[course.title]]" elevation="2">
+          <div class="card-content">
+            [[course.description]]
+          </div>
+        </paper-card>
+      </a>
+    </template>
+  </template>
+  <script>
+    Polymer({
+      is : 'asp-course-results',
+
+      properties : {
+        courses : {
+          type : Array
+        }
+      }
+    });
+  </script>
+</dom-module>

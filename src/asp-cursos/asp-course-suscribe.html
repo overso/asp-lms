@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="asp-course-suscribe">
+  <template>
+    <style>
+
+    </style>
+    <firebase-document
+        id="document"
+        app-name="notes"
+        path="/members/[[courseName]]/{{user.uid}}"
+        data="{{data}}">
+    </firebase-document>
+    <paper-button on-tap="_suscribe" raised>Suscribe</paper-button>
+
+  </template>
+  <script>
+    Polymer ({
+      is : 'asp-course-suscribe',
+      properties : {
+        user : {
+          type : Object
+        },
+        courseName : {
+          type : String
+        },
+        data : {
+          type : Object
+        }
+      },
+      _suscribe : function () {
+        var now = new Date().getTime();
+        this.data = {general_data : {vigencia : now}};
+        console.log(this.data);
+      }
+    });
+  </script>
+</dom-moduel>

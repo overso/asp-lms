@@ -91,10 +91,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       }
     </script>
-
-    <link rel="import" href="/src/asp-app.html">
-    <link rel="import" href="bower_components/polymerfire/firebase-app.html">
-
+     <link rel="import" href="src/asp-app/asp-app.html">
+      <link rel="import" href="bower_components/polymerfire/polymerfire.html">
     <style>
       body {
         margin: 0;
@@ -103,16 +101,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         min-height: 100vh;
         background-color: #eeeeee;
       }
+
+
     </style>
   </head>
   <body>
     <firebase-app
-      name=""
-      api-key=""
-      auth-domain=""
-      database-url="">
-    </firebase-app>
-    <asp-app></asp-app>
-    <!-- Built with love using Polymer Starter Kit -->
+         name="asp_project01"
+         api-key="AIzaSyCitRA4OEcLnAlS2AGByLIdLIS2qk0oI7s"
+         auth-domain="app-adoptalo.firebaseapp.com"
+         database-url="https://app-adoptalo.firebaseio.com/">
+   </firebase-app>
+   <asp-app></asp-app>
   </body>
 </html>

@@ -4,17 +4,12 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-material/paper-material.html">
-<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
 <link rel="import" href="../login-app/login-app.html">
 <link rel="import" href="asp-elements.html">
-<link rel="import" href="../asp-cursos/asp-cursos.html">
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-<dom-module id="asp-app" is="dom-bind">
+<dom-module id="asp-app">
   <template>
     <style is="custom-style" >
 
@@ -30,196 +25,138 @@
         --paper-toast-background-color: red;
         --paper-toast-color: white;
       }
+    </style>
 
 
-      iron-pages div {
-        width: 100%;
-        height: 100%;
-        padding: 80px 0;
-      }
-
-
-
-      h3 {
-      padding-top: 24px;
-      padding-left: 24px;
-    }
-
-    #container {
-      display: flex;
-      padding: 0px 24px 24px 24px;
-    } 
-
-    #info {
-      padding-left: 24px;
-      flex-grow: 1;
-    }
-
-    iron-image {
-      width: 240px;
-      height: 240px;
-      border-radius: 10px;
-    }
-      </style>
-
-
-    <app-location use-hash-as-path route="{{route}}"></app-location>
-    <app-route
-    route="{{route}}"
-    pattern="/:page"
-    data="{{data}}">
-    <iron-pages attr-for-selected="id" selected="{{data.page}}">
-            <div id="home">
-                  <paper-scroll-header-panel
-                    fixed >
-                          <asp-header
-                            user="[[_user]]"
-                            on-sign-out="signOut"
-                            on-changedroute-out="changedRouteOut">
-                          </asp-headfer>
-                          <asp-cursos>
-                          </asp-cursos>
-                  </paper-scroll-header-panel>
-            </div>
-
-            <div id="profile">
-                      <paper-scroll-header-panel
-                        fixed >
-                              <asp-header
-                                user="[[_user]]"
-                                on-sign-out="signOut"
-                                on-changedroute-out="changedRouteOut">
-                              </asp-header>
-                              <paper-material elevation="1">
-                                 <h3>General Information</h3>
-                                 <div id="container">
-                                   <iron-image src="[[_user.photoURL]]" sizing="cover"></iron-image>
-                                   <div id="info">
-                                     <paper-input label="Display Name" value="[[_user.displayName]]"></paper-input>
-                                     <paper-input label="Email" value="[[_user.email]]"></paper-input>
-                                     <paper-input label="URL Profile" value="[[_profileLocation]]"></paper-input>
-                                   </div>
-                                 </div>
-                               </paper-material>
-                      </paper-scroll-header-panel>
-             </div>
-    </iron-pages>
-
-
-
-    <firebase-auth id="firebaseAuth"
-                   app-name="asp_project01"
-                   user="{{_user}}"
-                   status-known="{{_statusKnown}}">
+    <akc-meta key="logged" value="[[_computeLoggedState(_statusKnown,_user)]]"></akc-meta>
+    <akc-meta key="user" value="[[_user]]"></akc-meta>
+    <firebase-auth
+           id="auth"
+           app-name="asp_project01"
+           status-known="{{_statusKnown}}"
+           user="{{_user}}">
     </firebase-auth>
 
 
-    <div hidden$="{{_computeLoggedState(_statusKnown,_user)}}">
-         <login-app
-                   id="login"
-                   on-sign-in="signIn"
-                   signed-in="[[signedIn]]"
-                   disabled="[[!online]]" ></login-app>
-    </div>
+    <app-location route="{{route}}" ></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{data}}"
+        tail="{{tail}}">
+    </app-route>
 
-    <paper-toast
-               id="msg_error"
-               duration="5000"
-               class="fit-bottom"
-               text="[[_toastMessage]]"></paper-toast>
+    <iron-pages attr-for-selected="id" selected="{{data.page}}">
+      <login-app
+        id="login"
+        on-sign-in="signIn" ></login-app>
+
+      <paper-scroll-header-panel
+        id="home"
+        fixed >
+              <asp-header
+                on-lock-in="lock">
+              </asp-header>
+              <asp-content>
+              </asp-content>
+
+      </paper-scroll-header-panel>
+
+
+
+   </iron-pages>
+
+
+
+<paper-toast
+  id="msg_error"
+  duration="5000"
+  class="fit-bottom"
+  text="[[msg]]"></paper-toast>
 
   </template>
   <script>
-
-
-
-  (function() {
-    'use strict';
-
     Polymer({
       is: 'asp-app',
       properties : {
-                location: {
-                  type: String,
-                  value: ''
-                },
-                _statusKnown: {
-                  type: Boolean,
-                  value: false
-                },
-                _user: {
-                  type: Object,
-                  notify:true,
-                },
-                //FALTA DEFINIR LOCATION
-                _profileLocation: {
-                  type: String,
-                  computed: '_computeProfileLocation(location,_user)',
-                  value: ''
-                },
-                _profile: {
-                  type: Object
-                },
-                _lastError: {
-                  type: String
-                },
-                _toastMessage: {
-                  type: String
-                }
-      },
-      _showStatus: function(logged) {
-           if (logged) {
-             return 'Logueado';
-           } else {
-             return 'Sin loguear';
-           }
-      },
-      signIn(e) {
-          this.$.firebaseAuth.signInWithPopup(e.detail.provider)
-          .then((response)=>{
-              console.log('signIn(e)::Login correcto, pasando a HOME');
-              this.set('route.path', '/home/');
-            })
-           .catch((error)=> {
-              this.handleError(error);
-            });
-      },
-      _computeLoggedState: function(statusKnown, user) {
-          return statusKnown && !!user;
-      },
-      _computeProfileLocation: function(location, user) {
-          if (user && user.uid) {
-              return [location, 'profiles', user.uid].join('/');
-            } else {
-                return '';
-              }
-       },
-      signOut() {
-          if (this.$.firebaseAuth) {
-              console.log("signOut()::Cerrando sesion");
-              this.$.firebaseAuth.signOut();
-              this.set('route.path', '/login/');
+        _statusKnown: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * User used for the `<firebase-auth>` inner element
+         */
+        _user: {
+          type: Object
+        },
+        msg:String,
+        data: {
+            type: Object,
+            value: function() {
+              return {
+                page: '/login/'
+              };
+            }
+        },
+        signedIn: {
+          type: Boolean,
+          notify:true
+        },
+        route: {
+            type: Object,
+            value: function() {
+              return {
+
+              };
+            }
+            /*,
+            observer:'_onRouteChanged'*/
           }
+
       },
-      changedRouteOut(e) {
-            console.log("Cambiador principal de route "+e.detail.link);
-            this.set('route.path', '/'+e.detail.link+'/');
+      ready: function() {
+          this.set('route.path', '/login/');
+      },
+
+      _computeLoggedState: function(statusKnown, user) {
+        return statusKnown && !!user;
+      },
+
+
+      signIn(e) {
+        this.$.auth.signInWithPopup(e.detail.provider)
+        .then((response)=>{
+             console.log('Login correcto, pasando a HOME');
+             this.set('route.path', '/home/');
+        })
+        .catch((error)=> {
+          this.handleError(error);
+        });
+
+      },
+      lock() {
+        console.log("cerrando sesion");
+        if (this.$.auth) {
+            this.$.auth.signOut();
+            this.set('route.path', '/login/');
+        }
       },
       handleError:function(error){
-             console.log('handleError()::Ocurrio un error en el login. '+error.code);
-             this._toastMessage="" ;
-             if(error.code=='auth/account-exists-with-different-credential')
-                { this._toastMessage="Ya existe una cuenta registrada con estes correo"}
-             else if(error.code=='auth/network-request-failed')
-                { this._toastMessage="No hay conexión a internet";}
-             else{
-                this._toastMessage="Error general, intente más tarde";
-             }
-             this.$.msg_error.open();
+        //console.log(JSON.stringify(error));
+         console.log('Ocurrio un error en el login. '+error.code);
+         this.msg="" ;
+        if(error.code=='auth/account-exists-with-different-credential')
+          { this.msg="Ya existe una cuenta registrada con estes correo"}
+        else if(error.code=='auth/network-request-failed')
+          { this.msg="No hay conexión a internet";}
+        else{
+          this.msg="Error general, intente más tarde";
+        }
+        this.$.msg_error.open();
+        //console.log(JSON.stringify(error) );
       }
 
     });
-
-  })();
   </script>
 </dom-module>

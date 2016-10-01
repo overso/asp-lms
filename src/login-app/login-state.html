@@ -1,0 +1,30 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/akc-meta/akc-meta.html">
+<dom-module id="login-state">
+  <template>
+    <akc-meta-query key="logged" value="{{logged}}"></akc-meta-query>
+    <akc-meta-query key="user" value="{{user}}"></akc-meta-query>
+  </template>
+  <script>
+
+    Polymer({
+
+      is: 'login-state',
+
+      properties: {
+        logged: {
+          type: Boolean,
+          readonly: true,
+          notify: true
+        },
+        user: {
+          type: Object,
+          readonly: true,
+          notify: true
+        }
+      }
+
+    });
+
+  </script>
+</dom-module>

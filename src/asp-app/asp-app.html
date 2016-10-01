@@ -77,7 +77,7 @@
         tail="{{courseTail}}"></app-route>
 
     <iron-pages attr-for-selected="id" selected="{{data.page}}">
-            <div id="home">
+            <div id="homex">
                   <paper-scroll-header-panel
                     fixed >
                           <asp-header
@@ -112,13 +112,29 @@
                       </paper-scroll-header-panel>
              </div>
 
-             <div>
-               <course-results id="home" courses="[[courses]]"></course-results>
+              <div id="home">
+                <paper-scroll-header-panel
+                  fixed >
+                        <asp-header
+                          user="[[_user]]"
+                          on-sign-out="signOut"
+                          on-changedroute-out="changedRouteOut">
+                        </asp-header>
+                         <asp-course-results courses="[[courses]]"></asp-course-results>
+                </paper-scroll-header-panel>
              </div>
 
-             <div>
-               <course-acces id="course" route="[[_computedTail(courseTail)]]" user="{{user}}"></course-acces>
-             </div>
+             <div id="course">
+               <paper-scroll-header-panel
+                 fixed >
+                       <asp-header
+                         user="[[_user]]"
+                         on-sign-out="signOut"
+                         on-changedroute-out="changedRouteOut">
+                       </asp-header>
+                      <asp-course-access  route="[[_computedTail(courseTail)]]" user="{{user}}"></asp-course-access>
+               </paper-scroll-header-panel>
+            </div>
 
     </iron-pages>
 
@@ -139,7 +155,7 @@
                    disabled="[[!online]]" ></login-app>
     </div>
 
-    <course-search courses="{{courses}}"></course-search>
+    <asp-course-search courses="{{courses}}"></asp-course-search>
     <paper-toast
                id="msg_error"
                duration="5000"
@@ -206,7 +222,7 @@
             });
       },
       _computedTail : function(courseTail) {
-        console.log("courses2:" + this.courses);
+        console.log("courses :" + this.courses);
         console.log(this.courseTail);
         return this.courseTail;
       },

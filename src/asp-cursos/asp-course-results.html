@@ -4,7 +4,7 @@
 
 <dom-module id="asp-course-results">
   <template>
-    <style>
+    <style is="custom-style">
       :host {
         @apply(--layout-horizontal);
         @apply(--layout-center-center);
@@ -26,7 +26,7 @@
       }
     </style>
     <template is="dom-repeat" items="{{courses}}" as="course">
-      <a href$="./course/[[course.$key]]" tabindex="-1">
+      <a href$="#/course/[[course.$key]]" tabindex="-1">
         <paper-card heading$="[[course.title]]" image$="[[course.image]]" alt$="[[course.title]]" elevation="2">
           <div class="card-content">
             [[course.description]]

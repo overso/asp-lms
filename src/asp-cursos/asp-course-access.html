@@ -14,12 +14,12 @@
     <app-route route="{{route}}" pattern="/:courseName" data="{{routeData}}"></app-route>
     <firebase-query
         id="query"
-        app-name="notes"
+        app-name="asp_project01"
         path="/members/{{routeData.courseName}}/{{user.uid}}"
         data="{{data}}">
     </firebase-query>
     <iron-pages attr-for-selected="name" selected="[[_cp(data)]]">
-      <div name="suscribe"><course-suscribe user="{{user}}" course-name="{{routeData.courseName}}"></course-suscribe></div>
+      <div name="suscribe"><asp-course-suscribe user="{{user}}" course-name="{{routeData.courseName}}"></asp-course-suscribe></div>
       <div name="view"><lessons-viewer course="{{routeData.courseName}}"></lessons-viewer></div>
       <div name="pay"><course-payment></course-payment></div>
     </iron-selector>

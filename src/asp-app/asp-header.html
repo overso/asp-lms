@@ -65,7 +65,7 @@
 
 	 	 </style>
   	   <paper-toolbar>
-	      <paper-icon-button icon="account-balance"></paper-icon-button>
+	      <paper-icon-button icon="account-balance" on-tap="clickLink" link="home"></paper-icon-button>
 	      <span class="spacer title">Ahora Sí Paso </span>
 	       <iron-image src$="{{user.photoURL}}" sizing="cover"></iron-image>
 	       <span class="displayname">{{user.displayName}}</span>
@@ -88,7 +88,7 @@
 	    Polymer({
 	      is: 'asp-header',
 	      properties : {
-      
+
 	      },
 	      signOut() {
 	      	  this.fire('sign-out', null);

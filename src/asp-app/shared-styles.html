@@ -1,0 +1,30 @@
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/font-roboto/roboto.html">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+
+<dom-module id="asp-app-shared-styles">
+  <template>
+    <style >
+        :host{           
+	      font-family: 'Roboto', 'Noto', sans-serif;
+	      font-size: 14px;
+
+	    }
+	     app-header {
+	        background-color: var(--paper-light-blue-900);        
+	        color: var(--paper-grey-50);
+	      }
+	      iron-image {
+	        width: 40px;
+	        height: 40px;
+	        border-radius: 20px;
+	      }
+	      .title {
+	        flex-grow: 1;
+	        margin: 9px 0;
+	      }
+    </style>
+  </template>
+</dom-module>

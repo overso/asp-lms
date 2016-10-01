@@ -1,0 +1,71 @@
+  <link rel="import" href="../../bower_components/polymer/polymer.html">
+  <link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+  <link rel="import" href="../../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+  <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="import" href="../../bower_components/paper-styles/color.html">
+  <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+  <link rel="import" href="../asp-cursos/asp-cursos.html">
+<dom-module id="asp-content">
+  <template>
+     <style is="custom-style">
+
+		    paper-card {
+		      margin-top: 20px;
+		      font-family: 'Roboto', 'Noto', sans-serif;
+		    }
+
+		   .centered {
+		    max-width: 40%;
+		    margin-left: auto;
+		    margin-right: auto;
+		  }
+
+		  .vertical-section-container {
+			    @apply(--layout-vertical);
+			    @apply(--center-justified);
+		  }
+
+		  paper-card .card-content{
+		  	color:var(--google-grey-700);
+		  }
+
+		  paper-card .card-content p{
+		  	font-weight:800;
+		  	font-size: 25px;
+		  	color:var(--paper-green-500);
+		  }
+		  paper-card .card-header{
+		  	font-size: 30px;
+		  	padding-left: 8px;
+		  	padding-top: 8px;
+		  	color: var(--paper-pink-a200);
+		  }
+
+		  paper-card .card-actions{
+		  	 padding-top: 10px;
+		  	 padding-bottom: 20px;
+		  	 text-align: right;
+		  }
+
+		  paper-button{
+		  	background-color: var(--paper-light-blue-900);
+		  	color: white;
+
+		  }
+  </style>
+
+
+  <div class="content">
+
+  </div>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'asp-content',
+
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,19 @@
+<link rel="import" href="../../bower_components/app-storage/app-network-status-behavior.html">
+
+<script>
+  (function() {
+    'use strict';
+
+    Polymer.AspAppBehaviorImpl = {
+      properties: {
+
+      }
+    };
+    
+    Polymer.AspAppBehavior = [
+      Polymer.AppNetworkStatusBehavior,
+      Polymer.AspAppBehaviorImpl
+    ];
+
+  })();
+</script>

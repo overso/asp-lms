@@ -1,0 +1,130 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<dom-module id="login-app">
+  <template >
+    <style is="custom-style">
+            :host{
+              font-family: 'Roboto', 'Noto', sans-serif;
+              font-size: 14px;
+              background: #424242;
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              z-index: 1;
+
+               @apply(--layout);
+               @apply(--layout-center-center);
+
+            }
+
+           .signInButton img{
+              padding: 0 8px 0 2px;
+              max-height: 15px;
+            }
+            .signInButton{
+              width: 220px;
+              text-align: center;
+              margin-bottom: 15px;
+              text-transform: none;
+              min-height: 40px;
+            }
+            .signInButton.mini {
+              width: 150px;
+            }
+            #googleButton{
+              background-color: white;
+            }
+            #facebookButton{
+              background-color: #3B5999;
+              color: white;
+            }
+            #googleButton:hover{
+              background-color: #F5F5F5
+            }
+            #facebookButton:hover{
+              background-color: #4265b0;
+            }
+            paper-button{
+              padding: 5px 5px;
+            }
+            paper-card {
+                  border-radius: 10px;
+                  text-align: center;
+                  background: #E91E63;
+                  padding: 20px 20px;
+              }
+             paper-card .card-actions {
+
+              }
+            paper-card .card-header {
+                font-family: 'Roboto', 'Noto', sans-serif;
+                font-size: 30px;
+                font-weight: 700;
+                padding-top: 2px;
+                color: #ffffff;
+                text-align: center;
+              }
+              paper-card .card-content{
+                font-family: 'Roboto', 'Noto', sans-serif;
+                font-size: 30px;
+                font-weight: 700;
+                padding-top: 5px;
+                color: #ffffff;
+                text-align: center;
+              }
+    </style>
+
+   <paper-card
+      elevation="5">
+      <div class="card-header">
+          Bienvendos
+      </div>
+      <div class="card-content">
+        <h1>Ahora Si Paso</h1>
+      </div>
+      <div class="card-actions" >
+            <paper-button
+            id="googleButton"
+            disabled="[[disabled]]"
+            class="signInButton"
+            on-tap="signIn"
+            raised
+            provider="google"><img src="images/google.svg">Logueate con Google</paper-button>
+             <paper-button
+             disabled="[[disabled]]"
+             id="facebookButton"
+             class="signInButton"
+             on-tap="signIn"
+             raised
+             provider="facebook"><img src="images/facebook.svg">Logueate con Facebook</paper-button>
+      </div>
+   </paper-card>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'login-app',
+       properties : {
+         disabled: {
+            type: Boolean,
+            reflectToAttribute: true,
+            value: false
+          },
+          signedIn: {
+            type: Boolean,
+            reflectToAttribute: true,
+            value: false
+          }
+       },
+      signIn: function(e) {
+          this.fire('sign-in', {provider: e.currentTarget.getAttribute('provider')});
+       }
+
+    });
+
+  </script>
+</dom-module>
